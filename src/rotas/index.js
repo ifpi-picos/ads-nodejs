@@ -1,6 +1,5 @@
 const express = require('express');
-const fs = require('fs');
-const usuarioControlador = require('../controlador/usuarios');
+const roteamentoUsuarios = require('./roteamentoUsuarios');
 
 const rota = express.Router();
 
@@ -9,20 +8,6 @@ rota.get('/', (req, res) => {
   res.send('App Online');
 });
 
-rota.get('/usuarios', async (req, res) => { 
-  const usuarios = await usuarioControlador.get();
-  res.send(usuarios);
-});
-
-rota.get('/usuarios/:id', async (req, res) => { 
-  const usuarios = await usuarioControlador.get();
-  res.send(usuarios);
-});
-
-rota.post('/usuarios', async (req, res) => { 
-  const dadosUsuario = req.body;
-  await usuarioControlador.add(dadosUsuario);
-  res.send('Usuário Cadastrado com Sucesso');
-});
+rota.use('/usuarios', roteamentoUsuarios); 
 
 module.exports = rota;
